@@ -55,7 +55,7 @@
         if (!feedback) return;
         feedback.hidden = false;
         feedback.className = `panel-feedback is-${kind}`;
-        feedback.textContent = msg;
+        feedback.innerHTML = msg;
       }
 
       if (checkBtn) {
@@ -138,7 +138,7 @@
             q.dataset.correct = String(isCorrect);
             if (explain) {
               explain.hidden = false;
-              explain.textContent = isCorrect
+              explain.innerHTML = isCorrect
                 ? btn.dataset.explain || "Correct."
                 : `${btn.dataset.explain || "Not quite."} ${wrongHint}`.trim();
             }

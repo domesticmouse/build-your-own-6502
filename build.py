@@ -110,7 +110,7 @@ def extract_directives_and_code(
                     f'<input type="text" class="blank-input" '
                     f'aria-label="Code blank {blank_count}" '
                     f'data-answer="{html.escape(answer, quote=True)}" '
-                    f'data-hint="{html.escape(hint, quote=True)}" '
+                    f'data-hint="{html.escape(render_inline_md(md, hint), quote=True)}" '
                     f'placeholder="{html.escape(placeholder, quote=True)}" '
                     f'style="width: {int(width) + 2}ch;">'
                 )
@@ -257,8 +257,8 @@ def extract_directives_and_code(
                 prose_html = md.render("\n".join(prose_before))
                 rendered = (
                     f'<section class="interactive-panel" id="{html.escape(ex_id)}" data-exercise '
-                    f'data-hint="{html.escape(str(prompts_data.get("hint", "")), quote=True)}" '
-                    f'data-success="{html.escape(str(prompts_data.get("success", "")), quote=True)}">'
+                    f'data-hint="{html.escape(render_inline_md(md, str(prompts_data.get("hint", ""))), quote=True)}" '
+                    f'data-success="{html.escape(render_inline_md(md, str(prompts_data.get("success", ""))), quote=True)}">'
                     f'<div class="panel-header"><h3 class="panel-title">{html.escape(title)}</h3>'
                     f'<span class="panel-badge">{html.escape(badge)}</span></div>'
                     f"{prose_html}{code_html}"
@@ -370,12 +370,12 @@ def extract_directives_and_code(
                         explain = str(opt.get("explain", ""))
                         opt_html.append(
                             f'<button type="button" class="quiz-option" '
-                            f'data-correct="{is_ok}" data-explain="{html.escape(explain, quote=True)}">'
+                            f'data-correct="{is_ok}" data-explain="{html.escape(render_inline_md(md, explain), quote=True)}">'
                             f'<span class="quiz-letter">{html.escape(letter)}</span>'
                             f"<span>{html.escape(text_val)}</span></button>"
                         )
                     q_blocks.append(
-                        f'<div class="quiz-question" data-wrong-hint="{html.escape(wrong_hint, quote=True)}">'
+                        f'<div class="quiz-question" data-wrong-hint="{html.escape(render_inline_md(md, wrong_hint), quote=True)}">'
                         f'<p class="quiz-question-prompt">{qi + 1}. {render_inline_md(md, prompt)}</p>'
                         f'<div class="quiz-options">{"".join(opt_html)}</div>'
                         f'<div class="quiz-explain" aria-live="polite" hidden></div></div>'
@@ -409,7 +409,7 @@ def protect_inline_code_and_math(
 
     def store(val: str) -> str:
         nonlocal idx
-        key = f"<!--INLINE_PROTECTED_{idx}-->"
+        key = f"\uE000INLINEPROTECTED{idx}\uE001"
         idx += 1
         tokens[key] = val
         return key
@@ -719,6 +719,8 @@ def render_page_shell(
 
 
 def validate_rendered_html(out_path: Path, full_html: str, errors: list[str]) -> None:
+    if any(tok in full_html for tok in ("\uE000", "INLINEPROTECTED", "BLOCK_PLACEHOLDER_")):
+        errors.append(f"{out_path}: unreplaced placeholder token leaked into HTML")
     if re.search(r"<[1-6]\b", full_html):
         errors.append(f"{out_path}: malformed heading tag <[1-6] found")
     if re.search(r"\{#[A-Za-z0-9_-]+\}", full_html):
@@ -737,6 +739,14 @@ def validate_rendered_html(out_path: Path, full_html: str, errors: list[str]) ->
     bare = BARE_TEX_MACRO_RE.search(prose_only)
     if bare:
         errors.append(f"{out_path}: un-delimited TeX macro {bare.group(0)!r} found in prose")
+
+    prose_text = re.sub(r"<script\b.*?</script>", " ", prose_only, flags=re.DOTALL)
+    prose_text = re.sub(r"<style\b.*?</style>", " ", prose_text, flags=re.DOTALL)
+    prose_text = re.sub(r"<[^>]+>", " ", prose_text)
+    if re.search(r"\*\*[^\s*][^*\n]*?\*\*", prose_text):
+        errors.append(f"{out_path}: unrendered bold Markdown (**...**) found in prose")
+    if re.search(r"`[^`\n]+`", prose_text):
+        errors.append(f"{out_path}: unrendered inline code Markdown (`...`) found in prose")
 
     if ("$" in prose_only and re.search(r"\$[^$\n]+\$", full_html)) and "katex.min.js" not in full_html:
         errors.append(f"{out_path}: math delimiters present without KaTeX assets")
