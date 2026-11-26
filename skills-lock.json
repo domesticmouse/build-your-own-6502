@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "skills": {
+    "bjm-voice": {
+      "source": "domesticmouse/skills",
+      "commit": "fefa623f98d8bf6ca90511341cc5176cbaaafb3a",
+      "sourceType": "github",
+      "skillPath": "skills/bjm-voice/SKILL.md",
+      "computedHash": "b2e273fb70c037ea7c17f2f9c1b9530effba5f37108233b800d0b5e3584d8ac3"
+    },
+    "teach-code": {
+      "source": "domesticmouse/skills",
+      "commit": "fefa623f98d8bf6ca90511341cc5176cbaaafb3a",
+      "sourceType": "github",
+      "skillPath": "skills/teach-code/SKILL.md",
+      "computedHash": "8b7d00ecbd43067baab568be78fc5dfd2180ac0f2f6f1b4c9317f596256724bb"
+    }
+  }
+}
