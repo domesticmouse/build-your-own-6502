@@ -2,6 +2,7 @@
 
 A study repository and interactive course for the **[Our Own 6502, Gate by Gate](https://www.youtube.com/playlist?list=PLUe5uP3A3_Vw)** video series by **Yves Robert** ([Gate by Gate](https://www.youtube.com/@gatebygate)), building a 6502 processor and 320×200 HDMI computer system from scratch in Verilog on a Sipeed Tang Nano 20K FPGA.
 
+- **Hosted Course Site:** [https://domesticmouse.github.io/build-your-own-6502/](https://domesticmouse.github.io/build-your-own-6502/)
 - **Detailed Curriculum & Episode Notes:** [curriculum.md](curriculum.md)
 - **Course Mission:** [MISSION.md](MISSION.md)
 - **Curated Resources:** [RESOURCES.md](RESOURCES.md)
@@ -9,8 +10,7 @@ A study repository and interactive course for the **[Our Own 6502, Gate by Gate]
 
 ## Interactive Course Site
 
-- **Live Course Site:** [https://domesticmouse.github.io/build-your-own-6502/](https://domesticmouse.github.io/build-your-own-6502/)
-- **License:** [LICENSE](LICENSE)
+- **Live Course Index:** [https://domesticmouse.github.io/build-your-own-6502/](https://domesticmouse.github.io/build-your-own-6502/)
 
 Build and validate the static HTML lessons and reference sheets locally:
 
@@ -19,11 +19,11 @@ Build and validate the static HTML lessons and reference sheets locally:
 ```
 
 ### Published Lessons
-- [Lesson 0001: FPGA Toolchain Setup, First Logic Gate & Blinking LED](lessons/0001-fpga-toolchain-environment.md) ([companion app](apps/0001-fpga-toolchain-environment/))
+- [Lesson 0001: FPGA Toolchain Setup, First Logic Gate & Blinking LED](https://domesticmouse.github.io/build-your-own-6502/lessons/0001-fpga-toolchain-environment.html) ([source](lessons/0001-fpga-toolchain-environment.md) • [companion app](apps/0001-fpga-toolchain-environment/))
 
 ### Reference Sheets
-- [Glossary of FPGA & 6502 Hardware Terms](reference/GLOSSARY.md)
-- [FPGA & 6502 Toolchain Cheat Sheet](reference/toolchain-cheatsheet.md)
+- [Glossary of FPGA & 6502 Hardware Terms](https://domesticmouse.github.io/build-your-own-6502/reference/glossary.html) ([source](reference/GLOSSARY.md))
+- [FPGA & 6502 Toolchain Cheat Sheet](https://domesticmouse.github.io/build-your-own-6502/reference/toolchain-cheatsheet.html) ([source](reference/toolchain-cheatsheet.md))
 
 ## Episodes
 
@@ -57,3 +57,11 @@ Here is the list of all **28 videos** in the playlist **[Our Own 6502, Gate by G
 26. [Our Own 6502 Branches Across a Page, in Verilog | Episode 26](https://www.youtube.com/watch?v=tZYV6iuu1F4) (19:24)
 27. [Our Own 6502 Gets a Stack, in Verilog | Episode 27](https://www.youtube.com/watch?v=L1c6EJLveS8) (16:37)
 28. [One Missing PLA, and Our Own 6502 Gets Lost | Episode 28](https://www.youtube.com/watch?v=C9miyObRPTw) (28:44)
+
+## License
+
+This repository is licensed under the Apache License 2.0 — see [LICENSE](LICENSE) for details.
+
+## Disclaimer
+
+This is not an officially supported Google product.
