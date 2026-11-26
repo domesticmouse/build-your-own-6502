@@ -1,0 +1,15 @@
+.venv/
+_site/
+index.html
+lessons/*.html
+reference/*.html
+apps/*/build/
+apps/*/*.vcd
+apps/*/*.vvp
+apps/*/*.json
+apps/*/*.fs
+apps/*/*.bin
+apps/*/*.o
+apps/*/*.hex
+__pycache__/
+.DS_Store

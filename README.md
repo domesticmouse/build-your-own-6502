@@ -1,9 +1,29 @@
 # Build your own 6502
 
-A study repository and curriculum for the **[Our Own 6502, Gate by Gate](https://www.youtube.com/playlist?list=PLUe5uP3A3_Vw)** video series by **Yves Robert** ([Gate by Gate](https://www.youtube.com/@gatebygate)), building a 6502 processor and computer system from scratch in Verilog on a Sipeed Tang Nano 20K FPGA.
+A study repository and interactive course for the **[Our Own 6502, Gate by Gate](https://www.youtube.com/playlist?list=PLUe5uP3A3_Vw)** video series by **Yves Robert** ([Gate by Gate](https://www.youtube.com/@gatebygate)), building a 6502 processor and 320×200 HDMI computer system from scratch in Verilog on a Sipeed Tang Nano 20K FPGA.
 
 - **Detailed Curriculum & Episode Notes:** [curriculum.md](curriculum.md)
+- **Course Mission:** [MISSION.md](MISSION.md)
+- **Curated Resources:** [RESOURCES.md](RESOURCES.md)
 - **Upstream Reference Repository:** [yvesrob/6502-gate-by-gate](https://github.com/yvesrob/6502-gate-by-gate)
+
+## Interactive Course Site
+
+- **Live Course Site:** [https://domesticmouse.github.io/build-your-own-6502/](https://domesticmouse.github.io/build-your-own-6502/)
+- **License:** [LICENSE](LICENSE)
+
+Build and validate the static HTML lessons and reference sheets locally:
+
+```bash
+.venv/bin/python build.py --check
+```
+
+### Published Lessons
+- [Lesson 0001: FPGA Toolchain Setup, First Logic Gate & Blinking LED](lessons/0001-fpga-toolchain-environment.md) ([companion app](apps/0001-fpga-toolchain-environment/))
+
+### Reference Sheets
+- [Glossary of FPGA & 6502 Hardware Terms](reference/GLOSSARY.md)
+- [FPGA & 6502 Toolchain Cheat Sheet](reference/toolchain-cheatsheet.md)
 
 ## Episodes
 
