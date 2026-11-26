@@ -63,3 +63,17 @@ Table: Tang Nano 20K Clock, LEDs, and User Buttons
 | `led[0]` .. `led[5]` | `15` .. `20` | **Active-low** (`0` = ON) | `IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=8` |
 | `s1` (Button S1) | `88` | Active-high (`1` = pressed) | `IO_TYPE=LVCMOS33 PULL_MODE=DOWN` |
 | `s2` (Button S2) | `87` | Active-high (`1` = pressed) | `IO_TYPE=LVCMOS33 PULL_MODE=DOWN` |
+
+## 4. Multi-File Simulation & Surfer Waveforms
+
+Pass every RTL module alongside its testbench to `iverilog` (and all synthesizable `.v` files to `yosys` via `read_verilog`):
+
+```bash caption="Multi-file simulation, synthesis, and VCD waveform inspection"
+# Unit-test a submodule and inspect its VCD waveform
+iverilog -g2012 -Wall -o build/half_adder.vvp half_adder.v half_adder_tb.v
+vvp build/half_adder.vvp
+surfer build/half_adder.vcd
+
+# Synthesize multiple Verilog source files into one top module
+yosys -q -p "read_verilog half_adder.v top.v; synth_gowin -top top -json build/top.json"
+```
