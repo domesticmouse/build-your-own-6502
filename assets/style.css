@@ -23,11 +23,22 @@
 
   --scrollbar-thumb: #6b768c;
   --scrollbar-track: #161922;
+  --page-max-width: 1520px;
+  --article-max-width: 72rem;
+  --sidenote-width: 260px;
+  --sidenote-gutter: 2rem;
 
   color-scheme: dark;
   accent-color: var(--accent);
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
   scrollbar-width: thin;
+}
+
+@media (min-width: 1360px) {
+  :root {
+    --sidenote-width: 290px;
+    --sidenote-gutter: 2.25rem;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -141,8 +152,8 @@ code:not(pre code) {
 }
 
 .course-nav {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-inline-size: var(--page-max-width);
+  margin-inline: auto;
   padding: 0.65rem 1.5rem;
   display: flex;
   flex-wrap: wrap;
@@ -229,19 +240,19 @@ code:not(pre code) {
 
 /* Main Tufte-inspired article layout */
 .page-main {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-inline-size: var(--page-max-width);
+  margin-inline: auto;
   padding: 2.25rem 1.5rem 4rem;
 }
 
 .lesson-article {
   position: relative;
-  max-width: 72ch;
+  max-inline-size: var(--article-max-width);
 }
 
-@media (min-width: 1120px) {
-  .lesson-article {
-    margin-right: 300px;
+@media (min-width: 1200px) {
+  .lesson-article:has(.sidenote) {
+    margin-inline-end: calc(var(--sidenote-width) + var(--sidenote-gutter));
   }
 }
 
@@ -347,7 +358,7 @@ code:not(pre code) {
   display: block;
 }
 
-@media (min-width: 1120px) {
+@media (min-width: 1200px) {
   .sidenote-toggle {
     display: none;
   }
@@ -356,14 +367,18 @@ code:not(pre code) {
     display: block;
     float: right;
     clear: right;
-    width: 260px;
-    margin-right: -300px;
-    margin-top: 0.15rem;
-    margin-bottom: 1rem;
+    inline-size: var(--sidenote-width);
+    margin-inline-end: calc(-1 * (var(--sidenote-width) + var(--sidenote-gutter)));
+    margin-block-start: 0.15rem;
+    margin-block-end: 1rem;
     padding: 0 0 0 0.9rem;
     background: transparent;
     border-left: 2px solid var(--border-strong);
     border-radius: 0;
+  }
+
+  .callout .sidenote {
+    margin-inline-end: calc(-1 * (var(--sidenote-width) + var(--sidenote-gutter) + 1.15rem + 1px));
   }
 
   .sidenote::before {
@@ -380,7 +395,7 @@ code:not(pre code) {
   background: var(--code-bg);
   border: 1px solid var(--border);
   border-radius: 8px;
-  overflow: hidden;
+  overflow: clip;
 }
 
 .code-caption,
@@ -403,6 +418,7 @@ code:not(pre code) {
   margin: 0 !important;
   padding: 1rem 1.1rem !important;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   background: transparent !important;
   font-size: 0.88rem;
   line-height: 1.5;
@@ -427,6 +443,7 @@ code:not(pre code) {
 
 .table-wrapper {
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   max-inline-size: 100%;
   margin: 0.5rem 0 1.5rem;
   border: 1px solid var(--border);
@@ -860,8 +877,8 @@ code:not(pre code) {
 }
 
 .site-footer {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-inline-size: var(--page-max-width);
+  margin-inline: auto;
   padding: 1.25rem 1.5rem 2.5rem;
   border-top: 1px solid var(--border);
   font-size: 0.85rem;
@@ -917,9 +934,10 @@ code:not(pre code) {
     display: none !important;
   }
 
-  .lesson-article {
-    max-width: 100%;
-    margin-right: 0;
+  .lesson-article,
+  .lesson-article:has(.sidenote) {
+    max-inline-size: 100%;
+    margin-inline-end: 0;
   }
 
   .sidenote {
