@@ -21,6 +21,8 @@ Build and validate the static HTML lessons and reference sheets locally:
 ### Published Lessons
 - [Lesson 0001: FPGA Toolchain Setup, First Logic Gate & Blinking LED](https://domesticmouse.github.io/build-your-own-6502/lessons/0001-fpga-toolchain-environment.html) ([source](lessons/0001-fpga-toolchain-environment.md) • [companion app](apps/0001-fpga-toolchain-environment/))
 - [Lesson 0002: Logic Gates, Half Adder, Testbenches & Surfer](https://domesticmouse.github.io/build-your-own-6502/lessons/0002-half-adder-and-waveforms.html) ([source](lessons/0002-half-adder-and-waveforms.md) • [companion app](apps/0002-half-adder-and-waveforms/))
+- [Lesson 0003: Full Adder, 8-Bit Ripple Carry & Exhaustive Testing](https://domesticmouse.github.io/build-your-own-6502/lessons/0003-8bit-ripple-carry-adder.html) ([source](lessons/0003-8bit-ripple-carry-adder.md) • [companion app](apps/0003-8bit-ripple-carry-adder/))
+- [Lesson 0004: D Flip-Flops, Non-Blocking <=, Counters & FSMs](https://domesticmouse.github.io/build-your-own-6502/lessons/0004-flip-flops-registers-fsm.html) ([source](lessons/0004-flip-flops-registers-fsm.md) • [companion app](apps/0004-flip-flops-registers-fsm/))
 
 ### Reference Sheets
 - [Glossary of FPGA & 6502 Hardware Terms](https://domesticmouse.github.io/build-your-own-6502/reference/glossary.html) ([source](reference/GLOSSARY.md))

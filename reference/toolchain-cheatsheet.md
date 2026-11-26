@@ -77,3 +77,17 @@ surfer build/half_adder.vcd
 # Synthesize multiple Verilog source files into one top module
 yosys -q -p "read_verilog half_adder.v top.v; synth_gowin -top top -json build/top.json"
 ```
+
+## 5. Synthesis Stats & Parameterized Simulation Overrides
+
+Inspect Gowin primitive counts (`LUT1`–`LUT4`, `ALU` carry cells, `DFFR`/`DFFRE` flip-flops) without emitting a JSON netlist, and override divider parameters in testbenches so simulations complete in nanoseconds:
+
+```bash caption="Yosys resource stats and testbench parameter override"
+# Print Gowin cell utilisation for a standalone module
+yosys -p "read_verilog half_adder.v full_adder.v adder8.v; synth_gowin -top adder8; stat"
+
+# Override a slow 27 MHz divider parameter inside a testbench
+top #(.TIMER_PERIOD(4)) dut (
+    .clk(clk), .s1(s1), .s2(s2), .led(led)
+);
+```
