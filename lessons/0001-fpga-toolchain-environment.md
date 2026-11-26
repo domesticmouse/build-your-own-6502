@@ -152,6 +152,14 @@ Table: Tang Nano 20K Pin Mapping for Lesson 1
 | `s1` | `88` | `PULL_MODE=DOWN` | Active-high push-button S1 |
 | `s2` | `87` | `PULL_MODE=DOWN` | Active-high push-button S2 |
 
+:::callout title="Why LVCMOS33 instead of LVCMOS18 for the LEDs?"
+You may notice some videos or Gowin tutorials using `IO_TYPE=LVCMOS18` for the onboard LEDs. On an FPGA, `IO_TYPE` does **not** change the physical voltage supplied to an I/O bank—it tells the toolchain what voltage the PCB's `VCCIO` rail is hardwired to so it can calibrate drive strengths and catch mismatches.
+
+- **Hardware reality:** On the Tang Nano 20K, LED pins `15`–`20` sit in Bank 6, which—along with the active-low LED pull-ups (through 510 Ω resistors)—is hardwired to **3.3 V**.
+- **Why `LVCMOS18` still appears to work:** Gowin EDA defaults unspecified pins to `LVCMOS18` (and the older Tang Nano 9K actually wired its LED bank to 1.8 V). Because the LEDs are simple active-low outputs driven to ground (`0`) or the physical 3.3 V rail (`1`), declaring `LVCMOS18` still blinks them when nothing else in Bank 6 specifies `LVCMOS33`.
+- **Why we use `LVCMOS33`:** As soon as any other pin in Bank 6 uses `LVCMOS33`, leaving the LEDs at `LVCMOS18` causes a bank-voltage conflict error during place-and-route (`ERROR (CT1136)` in Gowin EDA). Setting `LVCMOS33` from the start matches the real hardware and avoids conflicts later.
+:::
+
 ## 5. Self-Checking Simulation (`top_tb.v`) & `Makefile`
 
 Before touching physical silicon, we run an automated testbench with Icarus Verilog (`iverilog` + `vvp`). Notice how `top_tb.v` sets `.BLINK_BIT(2)` so the divider flips every 4 rising clock edges, tests all four `(s1, s2)` combinations via a reusable `task`, and fails loudly with `$fatal` if any bit mismatches.
