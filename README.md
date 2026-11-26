@@ -1,5 +1,12 @@
 # Build your own 6502
 
+A study repository and curriculum for the **[Our Own 6502, Gate by Gate](https://www.youtube.com/playlist?list=PLUe5uP3A3_Vw)** video series by **Yves Robert** ([Gate by Gate](https://www.youtube.com/@gatebygate)), building a 6502 processor and computer system from scratch in Verilog on a Sipeed Tang Nano 20K FPGA.
+
+- **Detailed Curriculum & Episode Notes:** [curriculum.md](curriculum.md)
+- **Upstream Reference Repository:** [yvesrob/6502-gate-by-gate](https://github.com/yvesrob/6502-gate-by-gate)
+
+## Episodes
+
 Here is the list of all **28 videos** in the playlist **[Our Own 6502, Gate by Gate](https://www.youtube.com/playlist?list=PLUe5uP3A3_Vw)** by **[Gate by Gate](https://www.youtube.com/@gatebygate)**:
 
 1. [I'm Rebuilding the 6502 from Scratch, One Gate at a Time | Episode 1](https://www.youtube.com/watch?v=czPMjs0Y0zc) (19:55)
