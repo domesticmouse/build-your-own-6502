@@ -127,3 +127,53 @@ _Avoid_: Propagation jitter
 **Colour Clash**:
 An artefact of attribute-cell graphics where all pixels inside a fixed tile (`8×8` pixels) share only two palette colours (**ink** and **paper**), preventing three independent colours inside one cell.
 _Avoid_: Palette corruption
+
+## 4. 6502 Architecture, Assembler & Bus
+
+**Accumulator**:
+The primary 8-bit arithmetic and logic register (`A`) inside the 6502 through which loads, additions, subtractions, and bitwise operations flow.
+_Avoid_: General-purpose register file
+
+**Program Counter**:
+The 16-bit internal register (`PC`) holding the memory address of the next instruction or operand byte to be fetched by the CPU.
+_Avoid_: Instruction pointer register (x86 terminology)
+
+**Status Register**:
+The 8-bit processor flags register (`P`, bit layout `N V - B D I Z C`) recording arithmetic conditions and control modes updated as instructions execute.
+_Avoid_: Condition code stack
+
+**Little-Endian**:
+A multi-byte storage convention where the least-significant byte comes first at the lower address, encoding `` `$C002` `` as `02 C0` in 6502 machine code.
+_Avoid_: Big-endian network byte order
+
+**Addressing Mode**:
+The rule specifying how an instruction interprets its operand bytes—such as Immediate (`#$01`), Absolute (`$8000`), or Implied (`CLC`).
+_Avoid_: Instruction opcode family
+
+**Relocation**:
+The linker pass in `ld65` that replaces unresolved segment-relative placeholders (`rr rr` in `ca65` listings) with final physical addresses once segments are placed.
+_Avoid_: Dynamic runtime linking
+
+**Linker Configuration**:
+A `memory.cfg` script defining physical `MEMORY` regions (`ZP`, `RAM`, `ROM`) and mapping assembly `SEGMENTS` (`CODE`, `RODATA`, `VECTORS`) into fixed address ranges.
+_Avoid_: Makefile dependency script
+
+**System Bus**:
+The shared bundle of 16-bit `address`, unidirectional `data_in` / `data_out`, and `write` control wires connecting the CPU to RAM, ROM, and I/O devices.
+_Avoid_: Internal tri-state bus
+
+**Address Decoding**:
+Combinational logic inspecting upper address bits (`address[15:14]`) to enable exactly one target region—RAM (`$0000`–`$7FFF`), I/O (`$8000`–`$BFFF`), or ROM (`$C000`–`$FFFF`).
+_Avoid_: Dynamic memory paging
+
+**Memory-Mapped I/O**:
+Assigning hardware peripherals such as onboard LEDs to ordinary memory addresses (`$8000`) so standard `STA`/`LDA` instructions control hardware without dedicated I/O opcodes.
+_Avoid_: Port-mapped I/O
+
+**Reset Vector**:
+The boot entry address (`$C000` hard-wired during Lesson 12, later read from `$FFFC`–`$FFFD`) where the CPU begins fetching after `reset`.
+_Avoid_: Interrupt handler table
+
+**Dead-Code Elimination**:
+A synthesis optimisation in `yosys` that removes unreachable registers or entire Block RAM primitives (such as unwritten RAM in Lesson 12) whose outputs can never affect top-level ports.
+_Avoid_: Runtime garbage collection

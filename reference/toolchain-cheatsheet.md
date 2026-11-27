@@ -123,3 +123,24 @@ IO_PORT "tmds_clk_p" IO_TYPE=LVCMOS33D PULL_MODE=NONE DRIVE=8;
 ```
 
 - Preload Block RAM cleanly across both `iverilog` and `yosys` using `.mem` hex text files (`$readmemh("bitmap.mem", bitmap_mem);`, avoiding `.hex` if `.gitignore` ignores compiled hex outputs) and verify `SP` / `SPX9` primitive inference via `make stats`.
+
+## 8. 6502 Assembly Toolchain (`ca65`, `ld65`, `da65`) & Memory Map
+
+Assemble, link into a padded 16 KB ROM image, convert to `$readmemh` format (`rom.mem`), and verify disassembly with `da65`:
+
+```bash caption="Assemble, link, convert to rom.mem, and disassemble"
+ca65 -l build/count.lst count.s -o build/count.o
+ld65 -C memory.cfg -m build/count.map build/count.o -o build/count.bin
+python3 bin2mem.py build/count.bin rom.mem build/code.bin
+da65 --start-addr 0xC000 build/code.bin
+```
+
+Table: Our 6502 Computer Memory Map & 2-Bit Address Decoder (`address[15:14]`)
+
+| `address[15:14]` | Address Range | Region | Bus Behaviour |
+| :--- | :--- | :--- | :--- |
+| `2'b00`, `2'b01` | `$0000`–`$7FFF` | `32` KB RAM (`16` `SP` blocks) | Read/write (`ram_select = ~address[15]`) |
+| `2'b10` | `$8000`–`$BFFF` | Memory-Mapped I/O (`$8000` = LEDs) | RAM writes blocked (`ram_write = 0`) |
+| `2'b11` | `$C000`–`$FFFF` | `16` KB ROM (`8` `SP` blocks) | Read-only (`rom_select = address[15] & address[14]`) |
+
+- Because Gowin `SP` Block RAM outputs read data **1 clock tick after** `address` changes, `bus.v` registers `ram_select_d1` and `rom_select_d1` on `posedge clk`, and any CPU or bus master must enforce `STEP_PERIOD >= 2` ticks per bus cycle.

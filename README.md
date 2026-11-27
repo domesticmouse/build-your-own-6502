@@ -27,6 +27,10 @@ Build and validate the static HTML lessons and reference sheets locally:
 - [Lesson 0006: Gowin rPLL & Clock Domain Segregation](https://domesticmouse.github.io/build-your-own-6502/lessons/0006-pll-pixel-clock.html) ([source](lessons/0006-pll-pixel-clock.md) • [companion app](apps/0006-pll-pixel-clock/))
 - [Lesson 0007: HDMI/DVI TMDS Encoding, OSER10 & Monitor Output](https://domesticmouse.github.io/build-your-own-6502/lessons/0007-hdmi-tmds-serialization.html) ([source](lessons/0007-hdmi-tmds-serialization.md) • [companion app](apps/0007-hdmi-tmds-serialization/))
 - [Lesson 0008: 320×200 16-Colour Frame Buffer & Block RAM Latency](https://domesticmouse.github.io/build-your-own-6502/lessons/0008-video-card-framebuffer.html) ([source](lessons/0008-video-card-framebuffer.md) • [companion app](apps/0008-video-card-framebuffer/))
+- [Lesson 0009: 6502 Registers, Memory Map & Hand-Assembled Machine Code](https://domesticmouse.github.io/build-your-own-6502/lessons/0009-hand-assembled-6502.html) ([source](lessons/0009-hand-assembled-6502.md) • [companion app](apps/0009-hand-assembled-6502/))
+- [Lesson 0010: Assembling & Linking 6502 Programs with ca65 and ld65](https://domesticmouse.github.io/build-your-own-6502/lessons/0010-ca65-ld65-toolchain.html) ([source](lessons/0010-ca65-ld65-toolchain.md) • [companion app](apps/0010-ca65-ld65-toolchain/))
+- [Lesson 0011: System Bus, Address Decoding & Synchronous Memory Timing](https://domesticmouse.github.io/build-your-own-6502/lessons/0011-rom-ram-and-bus.html) ([source](lessons/0011-rom-ram-and-bus.md) • [companion app](apps/0011-rom-ram-and-bus/))
+- [Lesson 0012: CPU Skeleton, Reset Vector & Fetch FSM](https://domesticmouse.github.io/build-your-own-6502/lessons/0012-first-cpu-fetch-fsm.html) ([source](lessons/0012-first-cpu-fetch-fsm.md) • [companion app](apps/0012-first-cpu-fetch-fsm/))
 
 ### Reference Sheets
 - [Glossary of FPGA & 6502 Hardware Terms](https://domesticmouse.github.io/build-your-own-6502/reference/glossary.html) ([source](reference/GLOSSARY.md))
