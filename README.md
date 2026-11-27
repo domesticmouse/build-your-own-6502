@@ -31,6 +31,10 @@ Build and validate the static HTML lessons and reference sheets locally:
 - [Lesson 0010: Assembling & Linking 6502 Programs with ca65 and ld65](https://domesticmouse.github.io/build-your-own-6502/lessons/0010-ca65-ld65-toolchain.html) ([source](lessons/0010-ca65-ld65-toolchain.md) • [companion app](apps/0010-ca65-ld65-toolchain/))
 - [Lesson 0011: System Bus, Address Decoding & Synchronous Memory Timing](https://domesticmouse.github.io/build-your-own-6502/lessons/0011-rom-ram-and-bus.html) ([source](lessons/0011-rom-ram-and-bus.md) • [companion app](apps/0011-rom-ram-and-bus/))
 - [Lesson 0012: CPU Skeleton, Reset Vector & Fetch FSM](https://domesticmouse.github.io/build-your-own-6502/lessons/0012-first-cpu-fetch-fsm.html) ([source](lessons/0012-first-cpu-fetch-fsm.md) • [companion app](apps/0012-first-cpu-fetch-fsm/))
+- [Lesson 0013: Combinational ALU & Shared 9-Bit Adder Architecture](https://domesticmouse.github.io/build-your-own-6502/lessons/0013-6502-alu-operations.html) ([source](lessons/0013-6502-alu-operations.md) • [companion app](apps/0013-6502-alu-operations/))
+- [Lesson 0014: N, Z, C, V Flags & Exhaustive ALU Verification](https://domesticmouse.github.io/build-your-own-6502/lessons/0014-alu-status-flags.html) ([source](lessons/0014-alu-status-flags.md) • [companion app](apps/0014-alu-status-flags/))
+- [Lesson 0015: Instruction Decoder, Multi-State Sequencer & Two-Read Rule](https://domesticmouse.github.io/build-your-own-6502/lessons/0015-first-five-instructions.html) ([source](lessons/0015-first-five-instructions.md) • [companion app](apps/0015-first-five-instructions/))
+- [Lesson 0016: Data Path Integration, Memory-Mapped LEDs & Fault Injection](https://domesticmouse.github.io/build-your-own-6502/lessons/0016-running-first-program.html) ([source](lessons/0016-running-first-program.md) • [companion app](apps/0016-running-first-program/))
 
 ### Reference Sheets
 - [Glossary of FPGA & 6502 Hardware Terms](https://domesticmouse.github.io/build-your-own-6502/reference/glossary.html) ([source](reference/GLOSSARY.md))

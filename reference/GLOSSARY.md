@@ -177,3 +177,37 @@ _Avoid_: Interrupt handler table
 **Dead-Code Elimination**:
 A synthesis optimisation in `yosys` that removes unreachable registers or entire Block RAM primitives (such as unwritten RAM in Lesson 12) whose outputs can never affect top-level ports.
 _Avoid_: Runtime garbage collection
+
+## 5. 6502 ALU, Sequencer & Data Path
+
+**ALU**:
+The Arithmetic and Logic Unit (`alu.v`), a purely combinational circuit computing arithmetic, logic, shifts, and status flags (`N`, `Z`, `C`, `V`) in a single shared 9-bit adder architecture.
+_Avoid_: Clocked arithmetic coprocessor
+
+**Two's Complement**:
+Signed binary integer representation where negating `b` computes `~b + 1`, letting one shared adder execute both addition and subtraction (`a + ~b + carry_in`).
+_Avoid_: Sign-magnitude encoding
+
+**Overflow Flag**:
+Status bit `V` indicating signed arithmetic wrapped beyond `-128..+127`, detected when two inputs of matching sign yield a sum of the opposite sign (`(a[7] == second[7]) && (sum[7] != a[7])`).
+_Avoid_: Unsigned carry flag
+
+**Instruction Decoder**:
+Combinational lookup logic (`decoder.v`) mapping an 8-bit opcode byte directly to internal instruction (`inst`) and addressing-mode (`mode`) control wires.
+_Avoid_: Microcode ROM sequencer
+
+**Sequencer**:
+The multi-state CPU Finite State Machine (`STARTING`, `OPCODE`, `OPERAND`, `HIGH`, `STORE`) steering `address`, `pc`, and `write` cycle-by-cycle to match `64doc` bus timing.
+_Avoid_: Pipelined reorder buffer
+
+**Two-Read Rule**:
+The NMOS 6502 bus behaviour where 1-byte implied instructions (`CLC`) read the following memory byte during cycle 2 (`OPERAND`) without incrementing `pc`, then re-read it as the next opcode.
+_Avoid_: Zero-cycle instruction skip
+
+**Data Path**:
+The storage registers (`A`, `P` flags) and ALU buses wired into `cpu.v` so combinational results latch on the `working` execution tick and drive `data_out`.
+_Avoid_: Control unit FSM
+
+**Fault Injection**:
+Deliberately introducing a bug (such as failing to update `A` during `LDA`) to verify that testbenches actually fail instead of passing vacuously on reset defaults.
+_Avoid_: Randomised fuzzing

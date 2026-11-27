@@ -144,3 +144,19 @@ Table: Our 6502 Computer Memory Map & 2-Bit Address Decoder (`address[15:14]`)
 | `2'b11` | `$C000`–`$FFFF` | `16` KB ROM (`8` `SP` blocks) | Read-only (`rom_select = address[15] & address[14]`) |
 
 - Because Gowin `SP` Block RAM outputs read data **1 clock tick after** `address` changes, `bus.v` registers `ram_select_d1` and `rom_select_d1` on `posedge clk`, and any CPU or bus master must enforce `STEP_PERIOD >= 2` ticks per bus cycle.
+
+## 9. 6502 ALU Opcodes, Flags & Five-State Sequencer
+
+Table: Shared 9-Bit Adder ALU (`alu_ops.vh` / `alu.v`) and Status Flags (`N, Z, C, V`)
+
+| Operation Group | `op` Codes | `second` / `adder_cin` | Flags Updated (`alu.v`) |
+| :--- | :--- | :--- | :--- |
+| Arithmetic | `ALU_ADD (0)`, `ALU_SUB (1)`, `ALU_CMP (2)` | `ADD: b, cin` / `SUB: ~b, cin` / `CMP: ~b, 1` | `N`, `Z`, `C`, plus `V` (`ADD`/`SUB`) |
+| Step | `ALU_INC (3)`, `ALU_DEC (4)` | `INC: $00, 1` / `DEC: $FF, 0` | `N`, `Z` (`carry_out = 0`) |
+| Logic | `ALU_AND (5)`, `ALU_ORA (6)`, `ALU_EOR (7)` | Bitwise `&`, `\|`, `^` | `N`, `Z` |
+| Shifts | `ALU_ASL (8)`, `ALU_LSR (9)`, `ALU_ROL (10)`, `ALU_ROR (11)` | Bit-slice wiring (`{...}`) | `N`, `Z`, `C` (shifted-out bit) |
+| Pass-through | `ALU_PASS (12)` | Forwards `b` untouched | `N`, `Z` (used by `LDA`) |
+
+- **Five-state CPU sequencer (`cpu.v`)**: `STARTING (0)` → `OPCODE (1)` → `OPERAND (2)` → `HIGH (3)` → `STORE (4)`.
+- **Two-Read Rule**: When `dec_mode == MODE_IMP` (`CLC`), `OPCODE` suppresses `pc <= pc + 16'd1` so `OPERAND` performs the dummy bus read at `pc` before `OPCODE` fetches `pc` for real.
+- **Data Path execution (`working`)**: `(state == OPERAND) && (mode == MODE_IMM || mode == MODE_IMP)` latches `alu_result` and status flags on the final cycle of `LDA`, `ADC`, and `CLC`.

@@ -1,0 +1,13 @@
+localparam [3:0] ALU_ADD  = 4'd0;
+localparam [3:0] ALU_SUB  = 4'd1;
+localparam [3:0] ALU_CMP  = 4'd2;
+localparam [3:0] ALU_INC  = 4'd3;
+localparam [3:0] ALU_DEC  = 4'd4;
+localparam [3:0] ALU_AND  = 4'd5;
+localparam [3:0] ALU_ORA  = 4'd6;
+localparam [3:0] ALU_EOR  = 4'd7;
+localparam [3:0] ALU_ASL  = 4'd8;
+localparam [3:0] ALU_LSR  = 4'd9;
+localparam [3:0] ALU_ROL  = 4'd10;
+localparam [3:0] ALU_ROR  = 4'd11;
+localparam [3:0] ALU_PASS = 4'd12;
