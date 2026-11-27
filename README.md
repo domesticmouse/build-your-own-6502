@@ -23,6 +23,10 @@ Build and validate the static HTML lessons and reference sheets locally:
 - [Lesson 0002: Logic Gates, Half Adder, Testbenches & Surfer](https://domesticmouse.github.io/build-your-own-6502/lessons/0002-half-adder-and-waveforms.html) ([source](lessons/0002-half-adder-and-waveforms.md) • [companion app](apps/0002-half-adder-and-waveforms/))
 - [Lesson 0003: Full Adder, 8-Bit Ripple Carry & Exhaustive Testing](https://domesticmouse.github.io/build-your-own-6502/lessons/0003-8bit-ripple-carry-adder.html) ([source](lessons/0003-8bit-ripple-carry-adder.md) • [companion app](apps/0003-8bit-ripple-carry-adder/))
 - [Lesson 0004: D Flip-Flops, Non-Blocking <=, Counters & FSMs](https://domesticmouse.github.io/build-your-own-6502/lessons/0004-flip-flops-registers-fsm.html) ([source](lessons/0004-flip-flops-registers-fsm.md) • [companion app](apps/0004-flip-flops-registers-fsm/))
+- [Lesson 0005: Raster Scanning, 640×480@60 Hz Counters & Test Patterns](https://domesticmouse.github.io/build-your-own-6502/lessons/0005-vga-raster-timing.html) ([source](lessons/0005-vga-raster-timing.md) • [companion app](apps/0005-vga-raster-timing/))
+- [Lesson 0006: Gowin rPLL & Clock Domain Segregation](https://domesticmouse.github.io/build-your-own-6502/lessons/0006-pll-pixel-clock.html) ([source](lessons/0006-pll-pixel-clock.md) • [companion app](apps/0006-pll-pixel-clock/))
+- [Lesson 0007: HDMI/DVI TMDS Encoding, OSER10 & Monitor Output](https://domesticmouse.github.io/build-your-own-6502/lessons/0007-hdmi-tmds-serialization.html) ([source](lessons/0007-hdmi-tmds-serialization.md) • [companion app](apps/0007-hdmi-tmds-serialization/))
+- [Lesson 0008: 320×200 16-Colour Frame Buffer & Block RAM Latency](https://domesticmouse.github.io/build-your-own-6502/lessons/0008-video-card-framebuffer.html) ([source](lessons/0008-video-card-framebuffer.md) • [companion app](apps/0008-video-card-framebuffer/))
 
 ### Reference Sheets
 - [Glossary of FPGA & 6502 Hardware Terms](https://domesticmouse.github.io/build-your-own-6502/reference/glossary.html) ([source](reference/GLOSSARY.md))

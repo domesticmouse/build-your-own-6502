@@ -91,3 +91,35 @@ top #(.TIMER_PERIOD(4)) dut (
     .clk(clk), .s1(s1), .s2(s2), .led(led)
 );
 ```
+
+## 6. Gowin PLL Generation & Simulating Hard Primitives
+
+Generate `rPLL` parameters for `GW2AR-18` with `gowin_pll`, keep behavioral simulation stubs (`rPLL`, `CLKDIV`, `OSER10`, `TLVDS_OBUF`) inside `sim_gowin_primitives.v`, and pass that file **only** to `iverilog`—never to `yosys`:
+
+```bash caption="Generate rPLL config and simulate hard primitives without polluting synthesis"
+# Solve IDIV_SEL / FBDIV_SEL / ODIV_SEL for 27 MHz -> 126 MHz
+~/oss-cad-suite/bin/gowin_pll -d "GW2AR-18 C8/I7" -i 27 -o 126 -f pll_126m.v
+
+# Pass simulation stubs ONLY to iverilog, never to yosys
+iverilog -g2012 -Wall -o build/top.vvp sim_gowin_primitives.v video_clock.v top.v top_tb.v
+yosys -q -p "read_verilog video_clock.v top.v; synth_gowin -top top -json build/top.json"
+```
+
+## 7. Tang Nano 20K HDMI / TMDS Pinout & Block RAM Verification
+
+Table: Onboard HDMI Differential Pinout (`GW2AR-LV18QN88C8/I7`)
+
+| Signal | `+` Pin | `-` Pin | Role |
+| :--- | :--- | :--- | :--- |
+| `tmds_clk_p` / `_n` | `33` | `34` | 25.2 MHz TMDS reference clock (`10'b0000011111`) |
+| `tmds_d_p[0]` / `_n[0]` | `35` | `36` | Channel 0 (Blue + `{vsync, hsync}` control tokens) |
+| `tmds_d_p[1]` / `_n[1]` | `37` | `38` | Channel 1 (Green) |
+| `tmds_d_p[2]` / `_n[2]` | `39` | `40` | Channel 2 (Red) |
+
+```text caption="Separate differential IO_LOC lines required by nextpnr-himbaechel"
+IO_LOC "tmds_clk_p" 33;
+IO_LOC "tmds_clk_n" 34;
+IO_PORT "tmds_clk_p" IO_TYPE=LVCMOS33D PULL_MODE=NONE DRIVE=8;
+```
+
+- Preload Block RAM cleanly across both `iverilog` and `yosys` using `.mem` hex text files (`$readmemh("bitmap.mem", bitmap_mem);`, avoiding `.hex` if `.gitignore` ignores compiled hex outputs) and verify `SP` / `SPX9` primitive inference via `make stats`.

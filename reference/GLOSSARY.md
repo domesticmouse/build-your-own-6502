@@ -73,3 +73,57 @@ _Avoid_: Firmware binary
 **Testbench**:
 A non-synthesizable Verilog harness module (`_tb.v`) run in simulation (`iverilog` + `vvp`) that drives input waveforms, checks assertions (`$fatal`), and dumps signal histories to a `.vcd` file.
 _Avoid_: Unit test script
+
+## 3. Video Architecture, Clocking & Memory
+
+**Raster Scan**:
+The progressive line-by-line, left-to-right, top-to-bottom pixel traversal order (`x` inner counter, `y` outer counter) used to drive VGA and HDMI displays.
+_Avoid_: Frame buffer blit
+
+**Blanking Interval**:
+The non-visible horizontal and vertical periods (front porch, sync pulse, and back porch) surrounding the active picture during which RGB outputs must remain black (`0, 0, 0`).
+_Avoid_: Screen margin
+
+**Pixel Clock**:
+The steady clock frequency (`25.2` MHz for 640×480@60 Hz) at which each pixel tick (`800 × 525 × 60`) advances across the display.
+_Avoid_: CPU clock
+
+**PLL**:
+A Phase-Locked Loop (`rPLL` on Gowin FPGAs)—an analogue/mixed-signal hard block that multiplies and divides a crystal input clock to synthesise new locked frequencies such as `126` MHz.
+_Avoid_: Software timer
+
+**Clock Domain**:
+A group of flip-flops clocked by the same clock source; signals crossing between asynchronous domains (`27` MHz ↔ `25.2` MHz) require synchronisers to prevent metastability.
+_Avoid_: Thread pool
+
+**TMDS**:
+Transition-Minimized Differential Signaling—the DVI/HDMI 8b/10b line coding algorithm that cuts bit transitions (`XOR`/`XNOR`) and preserves DC balance using a running disparity counter.
+_Avoid_: Packet compression
+
+**Running Disparity**:
+The cumulative signed imbalance `(ones - zeros)` tracked across transmitted TMDS symbols (`bias`) so bit 9 can invert upcoming words to keep the cable DC-neutral.
+_Avoid_: Parity bit
+
+**Differential Pair**:
+Two matched physical signal wires (`_p` and `_n`, driven by `TLVDS_OBUF`) carrying opposite polarities so the receiver cancels common-mode electrical noise.
+_Avoid_: Single-ended bus
+
+**Serializer**:
+A dedicated high-speed hardware shift primitive (`OSER10` on Gowin) that latches a wide parallel word on the pixel clock (`25.2` MHz) and shifts bits out serially at DDR (`126` MHz = `252` Mbps).
+_Avoid_: UART transmitter
+
+**Frame Buffer**:
+A region of dedicated video memory (`bitmap_mem` and `color_mem` in Lesson 8) scanned continuously by the raster engine to paint each pixel on screen.
+_Avoid_: Screen cache
+
+**Block RAM**:
+Dedicated synchronous SRAM memory tiles (`SP` / `SPX9` primitives on Gowin FPGAs) inferred from Verilog arrays to store kilobytes of data without consuming general-purpose LUTs or flip-flops.
+_Avoid_: Distributed register file
+
+**Pipeline Latency**:
+The one-or-more clock cycles required for a synchronous module (such as Block RAM) to output data after receiving an address, requiring matching register delays on parallel control signals.
+_Avoid_: Propagation jitter
+
+**Colour Clash**:
+An artefact of attribute-cell graphics where all pixels inside a fixed tile (`8×8` pixels) share only two palette colours (**ink** and **paper**), preventing three independent colours inside one cell.
+_Avoid_: Palette corruption
